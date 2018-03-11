@@ -113,6 +113,20 @@
 
             });
 
+            database.ref().on("child_added", function(snapshot) {
+
+                // Display input values FROM FIREBASE
+                $("tbody").append("<tr>" + "<td>" + snapshot.val().trainName + "</td>" +
+                    "<td>" + snapshot.val().destination + "</td>" +
+                    "<td>" + snapshot.val().time + "</td>" +
+                    "<td>" + snapshot.val().frequency + "</td>");
+                
+                // Error handling
+                }, function(errorObject) {
+                    console.log("Errors: " + errorObject.code);
+            });
+
+            
 
 
         </script>
