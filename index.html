@@ -92,13 +92,28 @@
                 event.preventDefault();
 
                 // Grab input
-                var train = $("#trainName").val().trim();
+                var trainName = $("#trainName").val().trim();
                 var destination = $("#destination").val().trim();
                 var time = $("#time").val().trim();
                 var frequency = $("#frequency").val().trim();
+                    
+                // Pushing data to firebase
+                database.ref().push({
+                    trainName: trainName,
+                    destination: destination,
+                    time: time,
+                    frequency: frequency
+                });
 
-                // Display input values
+                //Clearing input boxes
+                $("#trainName").val("");
+                $("#destination").val("");
+                $("#time").val("");
+                $("#frequency").val("");
+
             });
+
+
 
         </script>
     </body>
