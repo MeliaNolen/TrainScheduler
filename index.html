@@ -74,6 +74,32 @@
             </div>
         </div>
         
-        
+        <script>            
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyDvfNjbVU3emLAO465hJ3gvG8KmkaYH1XA",
+                authDomain: "trainscheduler-c2b71.firebaseapp.com",
+                databaseURL: "https://trainscheduler-c2b71.firebaseio.com",
+                projectId: "trainscheduler-c2b71",
+                storageBucket: "trainscheduler-c2b71.appspot.com",
+                messagingSenderId: "1025594701340"
+            };
+            firebase.initializeApp(config);
+            
+            var database = firebase.database();
+
+            $(".btn").on("click", function() {
+                event.preventDefault();
+
+                // Grab input
+                var train = $("#trainName").val().trim();
+                var destination = $("#destination").val().trim();
+                var time = $("#time").val().trim();
+                var frequency = $("#frequency").val().trim();
+
+                // Display input values
+            });
+
+        </script>
     </body>
 </html>
