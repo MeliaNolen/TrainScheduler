@@ -13,6 +13,9 @@
         <!-- Linking Firebase -->
         <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
 
+        <!-- Linking Moment.js -->
+        <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
     </head>
 
     <body>
@@ -114,12 +117,36 @@
             });
 
             database.ref().on("child_added", function(snapshot) {
+                console.log(snapshot.val().time);
+                // Time user inputs of the first train
+                var timeConverted = moment(snapshot.val().time, "HH:mm").subtract(1, "years");
+                console.log(moment(timeConverted));
+
+                // Console the current time 
+                console.log("Current time: " + moment(moment()).format("HH:mm"));
+                
+                // Number of minutes between first train and current time
+                var diff = moment().diff(moment(timeConverted), "minutes");
+                console.log("Difference: " + diff);
+
+                // Number of minutes since most recent train
+                var remainder = diff % snapshot.val().frequency;
+                console.log(remainder);
+
+                // Minutes until next train
+                var minUntilNextTrain = snapshot.val().frequency - remainder;
+                console.log(minUntilNextTrain);
+
+                // time next train will arrive
+                var nextTrain = moment().add(minUntilNextTrain, "minutes").format("hh:mm A");
+                console.log("Arrival: " +nextTrain);
 
                 // Display input values FROM FIREBASE
                 $("tbody").append("<tr>" + "<td>" + snapshot.val().trainName + "</td>" +
                     "<td>" + snapshot.val().destination + "</td>" +
-                    "<td>" + snapshot.val().time + "</td>" +
-                    "<td>" + snapshot.val().frequency + "</td>");
+                    "<td>" + snapshot.val().frequency + "</td>" +
+                    "<td>" + nextTrain + "</td>" +
+                    "<td>" + minUntilNextTrain + "</td>");
                 
                 // Error handling
                 }, function(errorObject) {
@@ -127,7 +154,7 @@
             });
 
             
-
+            
 
         </script>
     </body>
