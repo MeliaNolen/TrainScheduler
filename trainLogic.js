@@ -38,7 +38,7 @@ $(".btn").on("click", function() {
 });
 
 database.ref().on("child_added", function(snapshot) {
-    console.log(snapshot.val().time);
+    console.log("Time of first train: " + snapshot.val().time);
     // Time user inputs of the first train
     var timeConverted = moment(snapshot.val().time, "HH:mm").subtract(1, "years");
     console.log(moment(timeConverted));
@@ -52,11 +52,11 @@ database.ref().on("child_added", function(snapshot) {
 
     // Number of minutes since most recent train
     var remainder = diff % snapshot.val().frequency;
-    console.log(remainder);
+    console.log("Minutes since most recent train: " + remainder);
 
     // Minutes until next train
     var minUntilNextTrain = snapshot.val().frequency - remainder;
-    console.log(minUntilNextTrain);
+    console.log("Minutes until next train: " + minUntilNextTrain);
 
     // time next train will arrive
     var nextTrain = moment().add(minUntilNextTrain, "minutes").format("hh:mm A");
